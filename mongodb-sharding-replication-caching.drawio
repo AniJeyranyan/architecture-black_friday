@@ -1,0 +1,97 @@
+<mxfile host="Electron" version="24.6.4" type="device">
+  <diagram name="Step 3 - Caching" id="step3">
+    <mxGraphModel dx="1400" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="760" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="d3_title" value="Variant 3: sharding + replication + caching (Redis)" style="text;html=1;align=left;verticalAlign=middle;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="20" y="0" width="1100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="d3_client" value="Client&lt;br&gt;(web / mobile)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="20" y="335" width="110" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="d3_api" value="pymongo-api&lt;br&gt;(app: Python / FastAPI)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="200" y="335" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="d3_mongos" value="mongos_router&lt;br&gt;(mongos router)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="450" y="335" width="130" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="d3_e_cl_api" value="HTTP&lt;br&gt;requests" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="d3_client" target="d3_api">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d3_e_api_mg" value="queries on&lt;br&gt;cache miss" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="d3_api" target="d3_mongos">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d3_gcfg" value="Replica set: configSrv" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#666666;verticalAlign=top;fontStyle=1;arcSize=5;" vertex="1" parent="1">
+          <mxGeometry x="355" y="470" width="280" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="d3_cfg1" value="configSrv-1&lt;br&gt;(mongod, PRIMARY)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="435" y="505" width="120" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="d3_cfg2" value="configSrv-2&lt;br&gt;(mongod, SECONDARY)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="362" y="615" width="120" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="d3_cfg3" value="configSrv-3&lt;br&gt;(mongod, SECONDARY)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="508" y="615" width="120" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="d3_rc2" value="replication" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;dashed=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="d3_cfg1" target="d3_cfg2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d3_rc3" value="replication" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;dashed=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="d3_cfg1" target="d3_cfg3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d3_e_mg_cfg" value="shard metadata" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="d3_mongos" target="d3_gcfg">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d3_redis" value="redis&lt;br&gt;(Redis cache)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="210" y="520" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="d3_e_api_redis" value="query cache&lt;br&gt;(get/set)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;startArrow=classic;endArrow=classic;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="d3_api" target="d3_redis">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d3_g1" value="Replica set: shard1" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#666666;verticalAlign=top;fontStyle=1;arcSize=5;" vertex="1" parent="1">
+          <mxGeometry x="700" y="40" width="420" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="d3_s11" value="shard1-1&lt;br&gt;(mongod, PRIMARY)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="850" y="80" width="120" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="d3_s12" value="shard1-2&lt;br&gt;(mongod, SECONDARY)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="730" y="200" width="120" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="d3_s13" value="shard1-3&lt;br&gt;(mongod, SECONDARY)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="970" y="200" width="120" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="d3_r12" value="replication" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;dashed=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="d3_s11" target="d3_s12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d3_r13" value="replication" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;dashed=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="d3_s11" target="d3_s13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d3_e_mg_g1" value="read/write" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="d3_mongos" target="d3_g1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d3_g2" value="Replica set: shard2" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#666666;verticalAlign=top;fontStyle=1;arcSize=5;" vertex="1" parent="1">
+          <mxGeometry x="700" y="380" width="420" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="d3_s21" value="shard2-1&lt;br&gt;(mongod, PRIMARY)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="850" y="420" width="120" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="d3_s22" value="shard2-2&lt;br&gt;(mongod, SECONDARY)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="730" y="540" width="120" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="d3_s23" value="shard2-3&lt;br&gt;(mongod, SECONDARY)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="970" y="540" width="120" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="d3_r22" value="replication" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;dashed=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="d3_s21" target="d3_s22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d3_r23" value="replication" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;dashed=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="d3_s21" target="d3_s23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d3_e_mg_g2" value="read/write" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="d3_mongos" target="d3_g2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
