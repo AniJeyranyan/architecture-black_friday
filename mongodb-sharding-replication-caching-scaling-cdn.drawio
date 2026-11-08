@@ -1,0 +1,201 @@
+<mxfile host="Electron" version="24.6.4" type="device">
+  <diagram name="Step 5 - CDN" id="step5">
+    <mxGraphModel dx="1400" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1760" pageHeight="780" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="d5_title" value="Variant 5: CDN in several regions + API Gateway + Consul (service discovery) + sharding + replication + caching (Redis)" style="text;html=1;align=left;verticalAlign=middle;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="20" y="0" width="1700" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_note" value="pymongo-api instances register in Consul on start and are removed when they stop or fail the health check. The API Gateway takes the list of healthy instances from Consul and balances requests between them, so instances can be added or removed without downtime." style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;fontSize=11;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="360" y="40" width="350" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_gw" value="&lt;b&gt;API Gateway&lt;/b&gt;&lt;br&gt;(load balancer,&lt;br&gt;round robin)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="520" y="325" width="140" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_gapp" value="pymongo-api instances&lt;br&gt;(horizontal scaling)" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#666666;verticalAlign=top;fontStyle=1;arcSize=5;" vertex="1" parent="1">
+          <mxGeometry x="730" y="150" width="190" height="400" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_app1" value="pymongo-api-1&lt;br&gt;(app: Python / FastAPI)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="750" y="200" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_app2" value="pymongo-api-2&lt;br&gt;(app: Python / FastAPI)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="750" y="335" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_app3" value="pymongo-api-3&lt;br&gt;(app: Python / FastAPI)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="750" y="470" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_e_gw_app1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="d5_gw" target="d5_app1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="700" y="365" />
+              <mxPoint x="700" y="230" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d5_e_gw_app2" value="HTTP" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="d5_gw" target="d5_app2">
+          <mxGeometry x="0.55" relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_e_gw_app3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="d5_gw" target="d5_app3">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="700" y="365" />
+              <mxPoint x="700" y="500" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d5_gconsul" value="Consul cluster (service registry)" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#666666;verticalAlign=top;fontStyle=1;arcSize=5;" vertex="1" parent="1">
+          <mxGeometry x="360" y="620" width="560" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_consul1" value="consul-1&lt;br&gt;(server, leader)" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#ca3e79;fillColor=#fce4ec;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="565" y="670" width="150" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_consul2" value="consul-2&lt;br&gt;(server, follower)" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#ca3e79;fillColor=#fce4ec;" vertex="1" parent="1">
+          <mxGeometry x="380" y="670" width="140" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_consul3" value="consul-3&lt;br&gt;(server, follower)" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#ca3e79;fillColor=#fce4ec;" vertex="1" parent="1">
+          <mxGeometry x="760" y="670" width="140" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_rcon2" value="Raft" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;dashed=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="d5_consul1" target="d5_consul2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_rcon3" value="Raft" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;dashed=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="d5_consul1" target="d5_consul3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_e_gw_consul" value="service discovery:&lt;br&gt;list of healthy&lt;br&gt;instances" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;startArrow=classic;endArrow=classic;labelBackgroundColor=#ffffff;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0.473;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="d5_gw" target="d5_gconsul">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_e_app_consul" value="register / deregister,&lt;br&gt;health checks" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;startArrow=classic;endArrow=classic;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.83;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="d5_gapp" target="d5_gconsul">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_redis" value="redis&lt;br&gt;(Redis cache)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="990" y="60" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_e_app_redis" value="query cache&lt;br&gt;(get/set)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;startArrow=classic;endArrow=classic;labelBackgroundColor=#ffffff;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="d5_gapp" target="d5_redis">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_mongos" value="mongos_router&lt;br&gt;(mongos router)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="1040" y="335" width="130" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_e_app_mg" value="queries on&lt;br&gt;cache miss" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5375;exitDx=0;exitDy=0;" edge="1" parent="1" source="d5_gapp" target="d5_mongos">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_gcfg" value="Replica set: configSrv" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#666666;verticalAlign=top;fontStyle=1;arcSize=5;" vertex="1" parent="1">
+          <mxGeometry x="945" y="470" width="280" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_cfg1" value="configSrv-1&lt;br&gt;(mongod, PRIMARY)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="1025" y="505" width="120" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_cfg2" value="configSrv-2&lt;br&gt;(mongod, SECONDARY)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="952" y="615" width="120" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_cfg3" value="configSrv-3&lt;br&gt;(mongod, SECONDARY)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="1098" y="615" width="120" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_rc2" value="replication" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;dashed=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="d5_cfg1" target="d5_cfg2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_rc3" value="replication" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;dashed=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="d5_cfg1" target="d5_cfg3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_e_mg_cfg" value="shard metadata" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="d5_mongos" target="d5_gcfg">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_g1" value="Replica set: shard1" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#666666;verticalAlign=top;fontStyle=1;arcSize=5;" vertex="1" parent="1">
+          <mxGeometry x="1290" y="40" width="420" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_s11" value="shard1-1&lt;br&gt;(mongod, PRIMARY)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="1440" y="80" width="120" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_s12" value="shard1-2&lt;br&gt;(mongod, SECONDARY)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="1320" y="200" width="120" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_s13" value="shard1-3&lt;br&gt;(mongod, SECONDARY)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="1560" y="200" width="120" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_r12" value="replication" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;dashed=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="d5_s11" target="d5_s12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_r13" value="replication" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;dashed=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="d5_s11" target="d5_s13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_e_mg_g1" value="read/write" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="d5_mongos" target="d5_g1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_g2" value="Replica set: shard2" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#666666;verticalAlign=top;fontStyle=1;arcSize=5;" vertex="1" parent="1">
+          <mxGeometry x="1290" y="380" width="420" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_s21" value="shard2-1&lt;br&gt;(mongod, PRIMARY)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="1440" y="420" width="120" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_s22" value="shard2-2&lt;br&gt;(mongod, SECONDARY)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="1320" y="540" width="120" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_s23" value="shard2-3&lt;br&gt;(mongod, SECONDARY)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="1560" y="540" width="120" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_r22" value="replication" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;dashed=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="d5_s21" target="d5_s22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_r23" value="replication" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;dashed=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="d5_s21" target="d5_s23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_e_mg_g2" value="read/write" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="d5_mongos" target="d5_g2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_cdn_note" value="Static content of the online store (product images, CSS, JS, fonts) is stored in object storage (S3 / MinIO) – the CDN origin – and served to users from the CDN edge server of their region. On a cache miss each edge pulls the file from the origin and caches it by TTL (Cache-Control); files have versioned names (app.3f2a.js), so a new release is picked up without purging. Dynamic requests (catalog, cart, orders) bypass the CDN and go to the API Gateway." style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;fontSize=10;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="20" y="40" width="330" height="105" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_gusers" value="Users in different regions" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#666666;verticalAlign=top;fontStyle=1;arcSize=5;" vertex="1" parent="1">
+          <mxGeometry x="10" y="150" width="130" height="420" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_gcdn" value="CDN&lt;br&gt;(edge servers in regions)" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#666666;verticalAlign=top;fontStyle=1;arcSize=5;" vertex="1" parent="1">
+          <mxGeometry x="165" y="150" width="220" height="420" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_user_msk" value="Users&lt;br&gt;Moscow" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#f5f5f5;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="60" y="190" width="30" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_cdn_msk" value="&lt;b&gt;CDN edge&lt;/b&gt;&lt;br&gt;Region: Central&lt;br&gt;(Moscow)" style="shape=cloud;whiteSpace=wrap;html=1;fillColor=#e6f4ea;strokeColor=#1b8a3a;" vertex="1" parent="1">
+          <mxGeometry x="185" y="185" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_e_user_cdn_msk" value="static" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.07;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="d5_user_msk" target="d5_cdn_msk">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="d5_user_nsk" value="Users&lt;br&gt;Novosibirsk" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#f5f5f5;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="60" y="325" width="30" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_cdn_nsk" value="&lt;b&gt;CDN edge&lt;/b&gt;&lt;br&gt;Region: Siberia&lt;br&gt;(Novosibirsk)" style="shape=cloud;whiteSpace=wrap;html=1;fillColor=#e6f4ea;strokeColor=#1b8a3a;" vertex="1" parent="1">
+          <mxGeometry x="185" y="320" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_e_user_cdn_nsk" value="static" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.07;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="d5_user_nsk" target="d5_cdn_nsk">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="d5_user_vvo" value="Users&lt;br&gt;Vladivostok" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#f5f5f5;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="60" y="460" width="30" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_cdn_vvo" value="&lt;b&gt;CDN edge&lt;/b&gt;&lt;br&gt;Region: Far East&lt;br&gt;(Vladivostok)" style="shape=cloud;whiteSpace=wrap;html=1;fillColor=#e6f4ea;strokeColor=#1b8a3a;" vertex="1" parent="1">
+          <mxGeometry x="185" y="455" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_e_user_cdn_vvo" value="static" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.07;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="d5_user_vvo" target="d5_cdn_vvo">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="d5_static" value="&lt;b&gt;Static storage (CDN origin)&lt;/b&gt;&lt;br&gt;S3 / MinIO&lt;br&gt;images, CSS, JS, fonts" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#e6f4ea;strokeColor=#1b8a3a;" vertex="1" parent="1">
+          <mxGeometry x="440" y="180" width="170" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="d5_e_cdn_origin" value="cache miss:&lt;br&gt;pull from origin" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;labelBackgroundColor=#ffffff;exitX=1;exitY=0.1726;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="d5_gcdn" target="d5_static">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint y="30" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d5_e_users_gw" value="dynamic requests (HTTP API)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="d5_gusers" target="d5_gw">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="75" y="600" />
+              <mxPoint x="555" y="600" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
