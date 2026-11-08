@@ -1,0 +1,83 @@
+name: mongo-sharding
+
+# Variant 1: MongoDB sharding (2 shards)
+#   pymongo_api -> mongos_router -> configSrv (cluster metadata)
+#                                -> shard1, shard2 (data)
+# Default MongoDB ports: mongos 27017, shard server 27018, config server 27019
+
+x-mongo-healthcheck: &mongo-healthcheck
+  interval: 5s
+  timeout: 5s
+  retries: 10
+  start_period: 10s
+
+services:
+  # Config server (stores cluster metadata), single-member replica set "config_server"
+  configSrv:
+    image: dh-mirror.gitverse.ru/mongo:9.0.4
+    container_name: configSrv
+    restart: always
+    command: ["mongod", "--configsvr", "--replSet", "config_server", "--bind_ip_all", "--port", "27019"]
+    volumes:
+      - config-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--port", "27019", "--quiet", "--eval", "db.adminCommand('ping')"]
+      <<: *mongo-healthcheck
+
+  # Shard 1 (single-member replica set "shard1")
+  shard1:
+    image: dh-mirror.gitverse.ru/mongo:9.0.4
+    container_name: shard1
+    restart: always
+    command: ["mongod", "--shardsvr", "--replSet", "shard1", "--bind_ip_all", "--port", "27018"]
+    volumes:
+      - shard1-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--port", "27018", "--quiet", "--eval", "db.adminCommand('ping')"]
+      <<: *mongo-healthcheck
+
+  # Shard 2 (single-member replica set "shard2")
+  shard2:
+    image: dh-mirror.gitverse.ru/mongo:9.0.4
+    container_name: shard2
+    restart: always
+    command: ["mongod", "--shardsvr", "--replSet", "shard2", "--bind_ip_all", "--port", "27018"]
+    volumes:
+      - shard2-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--port", "27018", "--quiet", "--eval", "db.adminCommand('ping')"]
+      <<: *mongo-healthcheck
+
+  # Query router: the only MongoDB entry point for the application
+  mongos_router:
+    image: dh-mirror.gitverse.ru/mongo:9.0.4
+    container_name: mongos_router
+    restart: always
+    command: ["mongos", "--configdb", "config_server/configSrv:27019", "--bind_ip_all", "--port", "27017"]
+    depends_on:
+      configSrv:
+        condition: service_healthy
+      shard1:
+        condition: service_healthy
+      shard2:
+        condition: service_healthy
+    ports:
+      - 27017:27017
+
+  pymongo_api:
+    container_name: pymongo_api
+    build:
+      context: api_app
+      dockerfile: Dockerfile
+    depends_on:
+      - mongos_router
+    ports:
+      - 8080:8080
+    environment:
+      MONGODB_URL: "mongodb://mongos_router:27017"
+      MONGODB_DATABASE_NAME: "somedb"
+
+volumes:
+  config-data:
+  shard1-data:
+  shard2-data:
