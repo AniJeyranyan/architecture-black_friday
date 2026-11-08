@@ -94,4 +94,157 @@
       </root>
     </mxGraphModel>
   </diagram>
+  <diagram name="Step 4 - API Gateway + Consul" id="step4">
+    <mxGraphModel dx="1400" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="780" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="d4_title" value="Variant 4: horizontal scaling – API Gateway + Consul (service discovery) + sharding + replication + caching (Redis)" style="text;html=1;align=left;verticalAlign=middle;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="20" y="0" width="1350" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="d4_note" value="pymongo-api instances register in Consul on start and are removed when they stop or fail the health check. The API Gateway takes the list of healthy instances from Consul and balances requests between them, so instances can be added or removed without downtime." style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;fontSize=11;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="20" y="40" width="350" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="d4_client" value="Client&lt;br&gt;(web / mobile)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="20" y="335" width="110" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="d4_gw" value="&lt;b&gt;API Gateway&lt;/b&gt;&lt;br&gt;(load balancer,&lt;br&gt;round robin)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="180" y="325" width="140" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="d4_e_cl_gw" value="HTTP&lt;br&gt;requests" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="d4_client" target="d4_gw">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d4_gapp" value="pymongo-api instances&lt;br&gt;(horizontal scaling)" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#666666;verticalAlign=top;fontStyle=1;arcSize=5;" vertex="1" parent="1">
+          <mxGeometry x="390" y="150" width="190" height="400" as="geometry" />
+        </mxCell>
+        <mxCell id="d4_app1" value="pymongo-api-1&lt;br&gt;(app: Python / FastAPI)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="410" y="200" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="d4_app2" value="pymongo-api-2&lt;br&gt;(app: Python / FastAPI)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="410" y="335" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="d4_app3" value="pymongo-api-3&lt;br&gt;(app: Python / FastAPI)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="410" y="470" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="d4_e_gw_app1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="d4_gw" target="d4_app1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="360" y="365" />
+              <mxPoint x="360" y="230" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d4_e_gw_app2" value="HTTP&lt;br&gt;(balanced)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="d4_gw" target="d4_app2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d4_e_gw_app3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="d4_gw" target="d4_app3">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="360" y="365" />
+              <mxPoint x="360" y="500" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d4_gconsul" value="Consul cluster (service registry)" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#666666;verticalAlign=top;fontStyle=1;arcSize=5;" vertex="1" parent="1">
+          <mxGeometry x="20" y="620" width="560" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="d4_consul1" value="consul-1&lt;br&gt;(server, leader)" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#ca3e79;fillColor=#fce4ec;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="225" y="670" width="150" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="d4_consul2" value="consul-2&lt;br&gt;(server, follower)" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#ca3e79;fillColor=#fce4ec;" vertex="1" parent="1">
+          <mxGeometry x="40" y="670" width="140" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="d4_consul3" value="consul-3&lt;br&gt;(server, follower)" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#ca3e79;fillColor=#fce4ec;" vertex="1" parent="1">
+          <mxGeometry x="420" y="670" width="140" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="d4_rcon2" value="Raft" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;dashed=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="d4_consul1" target="d4_consul2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d4_rcon3" value="Raft" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;dashed=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="d4_consul1" target="d4_consul3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d4_e_gw_consul" value="service discovery:&lt;br&gt;list of healthy&lt;br&gt;instances" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;startArrow=classic;endArrow=classic;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.411;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="d4_gw" target="d4_gconsul">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d4_e_app_consul" value="register / deregister,&lt;br&gt;health checks" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;startArrow=classic;endArrow=classic;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.83;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="d4_gapp" target="d4_gconsul">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d4_redis" value="redis&lt;br&gt;(Redis cache)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="650" y="60" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="d4_e_app_redis" value="query cache&lt;br&gt;(get/set)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;startArrow=classic;endArrow=classic;labelBackgroundColor=#ffffff;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="d4_gapp" target="d4_redis">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d4_mongos" value="mongos_router&lt;br&gt;(mongos router)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="700" y="335" width="130" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="d4_e_app_mg" value="queries on&lt;br&gt;cache miss" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5375;exitDx=0;exitDy=0;" edge="1" parent="1" source="d4_gapp" target="d4_mongos">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d4_gcfg" value="Replica set: configSrv" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#666666;verticalAlign=top;fontStyle=1;arcSize=5;" vertex="1" parent="1">
+          <mxGeometry x="605" y="470" width="280" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="d4_cfg1" value="configSrv-1&lt;br&gt;(mongod, PRIMARY)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="685" y="505" width="120" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="d4_cfg2" value="configSrv-2&lt;br&gt;(mongod, SECONDARY)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="612" y="615" width="120" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="d4_cfg3" value="configSrv-3&lt;br&gt;(mongod, SECONDARY)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="758" y="615" width="120" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="d4_rc2" value="replication" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;dashed=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="d4_cfg1" target="d4_cfg2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d4_rc3" value="replication" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;dashed=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="d4_cfg1" target="d4_cfg3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d4_e_mg_cfg" value="shard metadata" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="d4_mongos" target="d4_gcfg">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d4_g1" value="Replica set: shard1" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#666666;verticalAlign=top;fontStyle=1;arcSize=5;" vertex="1" parent="1">
+          <mxGeometry x="950" y="40" width="420" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="d4_s11" value="shard1-1&lt;br&gt;(mongod, PRIMARY)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="1100" y="80" width="120" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="d4_s12" value="shard1-2&lt;br&gt;(mongod, SECONDARY)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="980" y="200" width="120" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="d4_s13" value="shard1-3&lt;br&gt;(mongod, SECONDARY)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="1220" y="200" width="120" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="d4_r12" value="replication" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;dashed=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="d4_s11" target="d4_s12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d4_r13" value="replication" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;dashed=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="d4_s11" target="d4_s13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d4_e_mg_g1" value="read/write" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="d4_mongos" target="d4_g1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d4_g2" value="Replica set: shard2" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#666666;verticalAlign=top;fontStyle=1;arcSize=5;" vertex="1" parent="1">
+          <mxGeometry x="950" y="380" width="420" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="d4_s21" value="shard2-1&lt;br&gt;(mongod, PRIMARY)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="1100" y="420" width="120" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="d4_s22" value="shard2-2&lt;br&gt;(mongod, SECONDARY)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="980" y="540" width="120" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="d4_s23" value="shard2-3&lt;br&gt;(mongod, SECONDARY)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="1220" y="540" width="120" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="d4_r22" value="replication" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;dashed=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="d4_s21" target="d4_s22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d4_r23" value="replication" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;dashed=1;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="d4_s21" target="d4_s23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d4_e_mg_g2" value="read/write" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="d4_mongos" target="d4_g2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
 </mxfile>
